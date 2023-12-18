@@ -1,6 +1,17 @@
-let numbers = [40, 100, 1, 5, 25, 10];
-numbers.sort(function(a, b) {
-  return a - b;
-});
-console.log(numbers); // Output: [1, 5, 10, 25, 40, 100]
-//this is for ascending number only
+function radixSortLSD(array) {
+    const maxNum = Math.max(...array) * 10;
+    let divisor = 10;
+    while (divisor < maxNum) {
+       let buckets = [...Array(10)].map(() => []);
+       for (let num of array) {
+          buckets[Math.floor((num % divisor) / (divisor / 10))].push(num);
+       }
+       array = [].concat.apply([], buckets);
+       divisor *= 10;
+    }
+    return array;
+}
+
+let arrayToBeSorted = [99, 1999999999, 51, 23, 102];
+let sortedArray = radixSortLSD(arrayToBeSorted);
+console.log(sortedArray);
